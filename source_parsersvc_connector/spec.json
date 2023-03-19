@@ -39,7 +39,7 @@
       "bearer_token": {
         "type": "string",
         "title": "Bearer Token",
-        "description": "Bearer Token to access API",
+        "description": "Bearer Token to access Parsers.vc API",
         "examples": [
           "SOME_BEARER_TOKEN"
         ]
