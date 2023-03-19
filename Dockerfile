@@ -11,7 +11,7 @@ WORKDIR /airbyte/integration_code
 COPY --from=builder /install /usr/local
 
 COPY main.py ./
-COPY source_file ./source_file
+COPY source_parsersvc_connector ./source_parsersvc_connector
 
 
 ENV AIRBYTE_ENTRYPOINT "python /airbyte/integration_code/main.py"
