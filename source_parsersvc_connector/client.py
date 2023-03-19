@@ -91,7 +91,7 @@ class URLFile:
             return response
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to download {self.topic}.{self.format} dump: {e}")
-        raise e
+            raise e
 
 
 
