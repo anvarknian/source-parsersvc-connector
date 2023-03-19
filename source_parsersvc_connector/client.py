@@ -88,7 +88,12 @@ class URLFile:
         try:
             response = requests.get(self.full_url, headers=headers, stream=True)
             response.raise_for_status()
-            return smart_open.open(response.content, **self.args)
+            filename = "./{}.{}".format(self.topic, self.format)
+            if os.path.exists(filename):
+                os.remove(filename)
+            with open(filename, 'wb') as f:
+                f.write(response.content)
+            return smart_open.open(filename, **self.args)
 
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to download {self.topic}.{self.format} dump: {e}")
