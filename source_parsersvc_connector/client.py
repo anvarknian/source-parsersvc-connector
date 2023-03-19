@@ -75,7 +75,7 @@ class URLFile:
         airbyte_version = environ.get("AIRBYTE_VERSION", "0.0")
         transport_params = {"headers":
             {
-                'Authorization': f'Bearer {self.bearer_token}',
+                'Authorization': 'Bearer {}'.format(self.bearer_token)
             }
         }
         logger.info(f"TransportParams: {transport_params}")
