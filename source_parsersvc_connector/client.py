@@ -20,7 +20,7 @@ from airbyte_cdk.models import AirbyteStream, SyncMode
 from genson import SchemaBuilder
 
 from yaml import safe_load
-
+import requests
 from .constants import PARSERSVC_URL
 from .utils import backoff_handler
 
@@ -71,15 +71,28 @@ class URLFile:
             raise FileNotFoundError(f"{PARSERSVC_URL}/{self.topic}/?format={self.format}") from err
         return self
 
+    # def _open(self):
+    #     airbyte_version = environ.get("AIRBYTE_VERSION", "0.0")
+    #     transport_params = {"headers":
+    #         {
+    #             'Authorization': 'Bearer {}'.format(self.bearer_token)
+    #         }
+    #     }
+    #     logger.info(f"TransportParams: {transport_params}")
+    #     # return smart_open.open(self.full_url, transport_params=transport_params, **self.args)
+    #     return
+
     def _open(self):
-        airbyte_version = environ.get("AIRBYTE_VERSION", "0.0")
-        transport_params = {"headers":
-            {
-                'Authorization': 'Bearer {}'.format(self.bearer_token)
-            }
-        }
-        logger.info(f"TransportParams: {transport_params}")
-        return smart_open.open(self.full_url, transport_params=transport_params, **self.args)
+        headers = {"Authorization": 'Bearer {}'.format(self.bearer_token)}
+        logger.info(f"headers: {headers}")
+        try:
+            response = requests.get(self.full_url, headers=headers, stream=True)
+            response.raise_for_status()
+            return response
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Failed to download {self.topic}.{self.format} dump: {e}")
+        raise e
+
 
 
 class Client:
