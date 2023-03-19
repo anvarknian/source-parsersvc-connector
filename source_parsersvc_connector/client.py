@@ -88,11 +88,11 @@ class URLFile:
         try:
             response = requests.get(self.full_url, headers=headers, stream=True)
             response.raise_for_status()
-            return response
+            return smart_open.open(response.content, **self.args)
+
         except requests.exceptions.RequestException as e:
             logger.error(f"Failed to download {self.topic}.{self.format} dump: {e}")
             raise e
-
 
 
 class Client:
