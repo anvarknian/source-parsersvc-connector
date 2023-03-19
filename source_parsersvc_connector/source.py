@@ -44,7 +44,7 @@ class SourceParsersVc(Source):
                 raise ConfigurationError("Field 'reader_options' is not valid JSON. https://www.json.org/")
         else:
             config["reader_options"] = {}
-        config["url"] = dropbox_force_download(f"{PARSERSVC_URL}/{config['topic']}/?format={config['format']}")
+#         config["url"] = dropbox_force_download(f"{PARSERSVC_URL}/{config['topic']}/?format={config['format']}")
 
         return config
 
