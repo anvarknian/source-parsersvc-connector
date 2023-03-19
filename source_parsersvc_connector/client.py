@@ -7,9 +7,8 @@ import json
 import tempfile
 import traceback
 import urllib
-from os import environ
 from typing import Iterable
-
+import os
 import backoff
 import google
 import numpy as np
@@ -72,7 +71,7 @@ class URLFile:
         return self
 
     # def _open(self):
-    #     airbyte_version = environ.get("AIRBYTE_VERSION", "0.0")
+    #     airbyte_version = os.environ.get("AIRBYTE_VERSION", "0.0")
     #     transport_params = {"headers":
     #         {
     #             'Authorization': 'Bearer {}'.format(self.bearer_token)
