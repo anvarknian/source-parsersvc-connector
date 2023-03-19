@@ -92,12 +92,10 @@ class Client:
     binary_formats = {"excel", "excel_binary", "feather", "parquet", "orc", "pickle"}
 
     def __init__(self,
-                 dataset_name: str,
                  bearer_token: str,
                  topic: str,
                  format: str = None,
                  reader_options: dict = None):
-        self._dataset_name = dataset_name
         self._bearer_token = bearer_token
         self._topic = topic
         self._reader_format = format or "csv"
@@ -107,9 +105,7 @@ class Client:
 
     @property
     def stream_name(self) -> str:
-        if self._dataset_name:
-            return self._dataset_name
-        return f"file_{self._provider['storage']}.{self._reader_format}"
+        return f"file_{self._topic}.{self._reader_format}"
 
     def load_nested_json_schema(self, fp) -> dict:
         # Use Genson Library to take JSON objects and generate schemas that describe them,
