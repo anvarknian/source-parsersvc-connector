@@ -24,7 +24,7 @@
         ],
         "default": "funds",
         "title": "Topic",
-        "description": "Topic to download from API"
+        "description": "Topic to download from Parsers.vc API"
       },
       "format": {
         "type": "string",
