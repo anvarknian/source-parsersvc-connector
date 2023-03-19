@@ -41,7 +41,7 @@
         "title": "Bearer Token",
         "description": "Bearer Token to access API",
         "examples": [
-          "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiZGVtbyIsIm5iZiI6MTYyNTA1NTE4NCwiZXhwIjoxNjI1MDU4Nzg0LCJpYXQiOjE2MjUwNTUxODQsImlzcyI6InBhcnNlcnMubWUifQ.CP8wK3ZTNpYG-DsD7F7C1D4lnM7kjhc0Hbqg6xg6U1tDBbdt2-UkvEUP4IOXak45Kwl8j7m2KdZJIxWe8o-GYFNAwwKWbm2zTFQ_8w5kK7mhbtseazucnWVGAfaUXUF6BPxExkQC_yXSTPi6TM_zpYECAkCp8xlJ96T4ENIX2L2_f0UDxPKVTvKoboPcGWBM4ImeTGcTHytR9op5qSHoPzIWP71weQg1OhIgQzR8Nf6S8ZU2TRLOc6Y2ETb501DFJPO-rFSEc6X_2B-p4VhDZ1ztVP0FpAOwM36133-p2t6ETUZL4HnPj8MlWWWxtQR9FG7RzZGmde36y_wgC98x8Q"
+          "SOME_BEARER_TOKEN"
         ]
       },
       "reader_options": {
