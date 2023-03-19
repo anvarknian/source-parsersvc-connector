@@ -1,7 +1,7 @@
 *
 !Dockerfile
 !main.py
-!source_file
+!source_parsersvc_connector
 !setup.py
 !integration_tests
 !secrets
