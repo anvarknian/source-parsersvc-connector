@@ -77,7 +77,6 @@ class URLFile:
     def _open(self):
         airbyte_version = os.environ.get("AIRBYTE_VERSION", "0.0")
         transport_params = {'Authorization': f'Bearer {self.bearer_token}'}
-        logger.info(f"TransportParams: {transport_params}")
         response = requests.get(self.full_url, headers=transport_params, stream=True)
         if response.status_code == 200:
             try:
