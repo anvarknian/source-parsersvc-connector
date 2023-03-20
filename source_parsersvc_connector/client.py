@@ -2,7 +2,10 @@
 # Copyright (c) 2023 Airbyte, Inc., all rights reserved.
 #
 
+import io
+import csv
 
+import zipfile
 import json
 import tempfile
 import traceback
@@ -62,25 +65,52 @@ class URLFile:
             self._file.close()
             self._file = None
 
-    def open(self):
-        self.close()
-        try:
-            self._file = self._open()
-        except google.api_core.exceptions.NotFound as err:
-            raise FileNotFoundError(f"{PARSERSVC_URL}/{self.topic}/?format={self.format}") from err
-        return self
+    # def open(self):
+    #     self.close()
+    #     try:
+    #         self._file = self._open()
+    #     except google.api_core.exceptions.NotFound as err:
+    #         raise FileNotFoundError(f"{PARSERSVC_URL}/{self.topic}/?format={self.format}") from err
+    #     return self
 
-    # def _open(self):
-    #     airbyte_version = os.environ.get("AIRBYTE_VERSION", "0.0")
-    #     transport_params = {"headers":
-    #         {
-    #             'Authorization': 'Bearer {}'.format(self.bearer_token)
-    #         }
-    #     }
-    #     logger.info(f"TransportParams: {transport_params}")
-    #     # return smart_open.open(self.full_url, transport_params=transport_params, **self.args)
-    #     return
+    def _open(self):
+        airbyte_version = os.environ.get("AIRBYTE_VERSION", "0.0")
+        transport_params = {"headers":
+            {
+                'Authorization': 'Bearer {}'.format(self.bearer_token)
+            }
+        }
+        logger.info(f"TransportParams: {transport_params}")
+        with smart_open.open(self.full_url,
+                             'rb',
+                             transport_params=transport_params,
+                             **self.args) as file:
+            # Create a ZipFile object from the file contents
+            zipfile_obj = zipfile.ZipFile(io.BytesIO(file.read()))
 
+            # Find the CSV file in the ZipFile object
+            csv_filename = None
+            for filename in zipfile_obj.namelist():
+                if filename.endswith('.csv'):
+                    csv_filename = filename
+                    break
+
+            # Check if a CSV file was found in the ZipFile object
+            if csv_filename is not None:
+
+                # Open the CSV file in the ZipFile object
+                csv_file = zipfile_obj.open(csv_filename)
+
+                # Read the CSV data into a list of dictionaries
+                c = csv.DictReader(io.TextIOWrapper(csv_file))
+                csv_data = list(c)
+                print(csv_data)
+
+                # Do something with the CSV data
+                return  c
+            else:
+                logger.error(f"No CSV file found in the zip file")
+                raise Exception('No CSV file found in the zip file')
     def _open(self):
         headers = {"Authorization": 'Bearer {}'.format(self.bearer_token)}
         logger.info(f"headers: {headers}")

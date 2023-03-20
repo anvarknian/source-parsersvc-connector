@@ -1,3 +1,4 @@
 .gradle
 venv
 .venv
+/.idea/
