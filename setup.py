@@ -28,7 +28,7 @@ setup(
     name="source_parsersvc_connector",
     description="Parsers.vc API Connector",
     author="Anwar Knyane",
-    author_email="arsenic69@outlook.com",
+    author_email="test@test.com",
     packages=find_packages(),
     install_requires=MAIN_REQUIREMENTS,
     package_data={"": ["*.json"]},
